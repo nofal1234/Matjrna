@@ -24,12 +24,25 @@
         /* Announcement Bar Animation */
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         .animate-marquee { display: inline-block; white-space: nowrap; animation: marquee 40s linear infinite; }
-        .marquee-container { display: flex; overflow: hidden; width: 100%; }
-        .announcement-bar { transition: all 0.3s ease-in-out; }
-        .announcement-bar.hidden { height: 0; padding: 0; opacity: 0; transform: translateY(-100%); overflow: hidden; margin: 0; }
+        .marquee-container { display: flex; overflow: hidden; width: 100%; margin: 0; }
+        .announcement-bar {
+            height: auto;
+            padding: 0;
+            margin: 0;
+            opacity: 1;
+            transform: translateY(0);
+            transition: none;
+        }
+        .announcement-bar.hidden {
+            height: 0;
+            padding: 0;
+            opacity: 0;
+            transform: translateY(-100%);
+            overflow: hidden;
+        }
         
         /* Header & Search Popup Transitions */
-        header { transition: top 0.3s ease-in-out; }
+        header { transition: none; }
         .search-popup { transform: translateY(-100%); transition: transform 0.3s ease-in-out; }
         .search-popup.show { transform: translateY(0); }
         .search-overlay { opacity: 0; visibility: hidden; transition: all 0.3s ease-in-out; }
@@ -46,30 +59,30 @@
     <div x-data="{ menuOpen: false, activePanel: 'main', scrolled: false, searchOpen: false, cartOpen: false }" @keydown.escape.window="menuOpen = false; searchOpen = false; cartOpen = false" @scroll.window="scrolled = window.pageYOffset > 40">
         
         <!-- Announcement Bar -->
-        <div class="bg-black text-white overflow-hidden announcement-bar h-10 py-2" :class="scrolled ? 'hidden' : ''">
-            <div class="marquee-container">
+        <div class="bg-black text-white overflow-hidden announcement-bar">
+            <div class="marquee-container flex flex-row items-center gap-0 py-2">
                 <div class="animate-marquee">
-                    <span class="mx-4 text-sm font-bold">التوصيل في نفس اليوم في القاهرة والجيزة</span><span class="mx-1">•</span>
-                    <span class="mx-4 text-sm font-bold">استمتع بالشحن المجاني للطلبات التي تزيد قيمتها عن 2,999 جنيه مصري</span><span class="mx-1">•</span>
-                    <span class="mx-4 text-sm font-bold">اشتري الآن وادفع بالتقسيط على 12 شهر</span>
+                    <span class="text-sm lg:text-base font-bold px-4">التوصيل في نفس اليوم في القاهرة والجيزة</span><span class="px-2">•</span>
+                    <span class="text-sm lg:text-base font-bold px-4">استمتع بالشحن المجاني للطلبات التي تزيد قيمتها عن 2,999 جنيه مصري</span><span class="px-2">•</span>
+                    <span class="text-sm lg:text-base font-bold px-4">اشتري الآن وادفع بالتقسيط على 12 شهر</span>
                 </div>
                 <div class="animate-marquee" aria-hidden="true">
-                    <span class="mx-4 text-sm font-bold">التوصيل في نفس اليوم في القاهرة والجيزة</span><span class="mx-1">•</span>
-                    <span class="mx-4 text-sm font-bold">استمتع بالشحن المجاني للطلبات التي تزيد قيمتها عن 2,999 جنيه مصري</span><span class="mx-1">•</span>
-                    <span class="mx-4 text-sm font-bold">اشتري الآن وادفع بالتقسيط على 12 شهر</span>
+                    <span class="text-sm lg:text-base font-bold px-4">التوصيل في نفس اليوم في القاهرة والجيزة</span><span class="px-2">•</span>
+                    <span class="text-sm lg:text-base font-bold px-4">استمتع بالشحن المجاني للطلبات التي تزيد قيمتها عن 2,999 جنيه مصري</span><span class="px-2">•</span>
+                    <span class="text-sm lg:text-base font-bold px-4">اشتري الآن وادفع بالتقسيط على 12 شهر</span>
                 </div>
             </div>
         </div>
         
         <!-- Header -->
-        <header class="fixed left-0 w-full z-40 bg-white bg-opacity-95 backdrop-blur-sm shadow-sm" :class="scrolled ? 'top-0' : 'top-10'">
-            <div class="container mx-auto px-4 lg:px-12">
-                <div class="grid grid-cols-3 items-center py-3">
-                    <div class="flex items-center space-x-4 justify-start">
+        <header class="fixed left-0 w-full z-40 bg-white bg-opacity-90 backdrop-blur-sm shadow-sm transition-all duration-300" :class="scrolled ? 'top-0' : 'top-10'">
+            <div class="container mx-auto px-4 lg:px-8 xl:px-12 2xl:px-16">
+                <div class="grid grid-cols-3 items-center py-6 gap-0">
+                    <div class="flex items-center gap-6 justify-start">
                         <button @click="menuOpen = true" aria-label="القائمة"><svg class="h-6 w-6" viewBox="0 0 22 22" stroke="currentColor" stroke-width="1.9"><path d="M1 5h20M1 11h20M1 17h20" stroke-linecap="round"></path></svg></button>
                     </div>
-                    <div class="flex justify-center"><a href="#"><img src="shop/files/1050_x_400_v=1719759183&width=300.png" alt="Matjrna Logo" class="h-10 md:h-12 w-auto"></a></div>
-                    <div class="flex items-center space-x-4 justify-end">
+                    <div class="flex justify-center"><a href="index.html"><img src="shop/files/1050_x_400_v=1719759183&width=300.png" alt="Matjrna Logo" class="h-12 md:h-16 w-auto"></a></div>
+                    <div class="flex items-center gap-6 justify-end">
                         <div x-data="{ langOpen: false }" class="relative hidden md:block">
                             <button @click="langOpen = !langOpen" class="flex items-center space-x-1 text-sm font-bold">
                                 <span>العربية</span><svg class="h-3 w-3" viewBox="0 0 10 7" fill="none" stroke="currentColor" stroke-width="2"><path d="m1 1 4 4 4-4"></path></svg>
@@ -241,16 +254,16 @@
      <!-- ====================================================== -->
      
      <!-- ====================================================== -->
-    <footer class="text-white pt-12 pb-6" style="background-color: #002c31;">
-        <div class="container mx-auto px-12"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-            <div class="col-span-1 lg:col-span-1"><h3 class="font-bold mb-4">حول متجرنا</h3><p class="text-sm text-gray-300">📍 نزلة البطران، الجيزة، مصر</p><p class="text-sm text-gray-300 mt-2">✉️ info@matjrna.com</p><p class="text-sm text-gray-300 mt-2">📞 +201005780405</p></div>
-            <div><h3 class="font-bold mb-4">معلومات</h3><ul class="space-y-2 text-sm"><li><a href="#" class="text-gray-300 hover:text-white">معلومات عنا</a></li><li><a href="#" class="text-gray-300 hover:text-white">قصتنا</a></li><li><a href="#" class="text-gray-300 hover:text-white">اتصل بنا</a></li></ul></div>
-            <div><h3 class="font-bold mb-4">سياسة</h3><ul class="space-y-2 text-sm"><li><a href="#" class="text-gray-300 hover:text-white">سياسة الخصوصية</a></li><li><a href="#" class="text-gray-300 hover:text-white">سياسة الاسترجاع</a></li><li><a href="#" class="text-gray-300 hover:text-white">سياسة الشحن</a></li></ul></div>
-            <div><h3 class="font-bold mb-4">يدعم</h3><ul class="space-y-2 text-sm"><li><a href="#" class="text-gray-300 hover:text-white">الأسئلة الشائعة</a></li><li><a href="#" class="text-gray-300 hover:text-white">حسابي</a></li><li><a href="#" class="text-gray-300 hover:text-white">تتبع طلبي</a></li></ul></div>
-            <div class="col-span-1 md:col-span-2 lg:col-span-1"><img src="shop/files/1050_x_400_v=1719759183&width=450.png" alt="Payment Methods" class="w-48 mb-4 filter brightness-0 invert"><h3 class="font-semibold mb-2">قم بالتسجيل للحصول على عروض شخصية</h3><form><div class="relative"><input type="email" placeholder="البريد الإلكتروني" class="w-full bg-gray-800 border-gray-700 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-400"><button type="submit" class="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400">→</button></div></form></div>
-        </div><div class="border-t border-gray-700 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+    <footer class="text-white" style="background-color: #002c31;">
+        <div class="container mx-auto px-4 lg:px-8 xl:px-12 2xl:px-16"><div class="flex flex-col gap-12 pt-12 pb-6"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10 xl:gap-12">
+            <div class="col-span-1 lg:col-span-1 flex flex-col gap-4"><h3 class="font-bold text-base lg:text-lg xl:text-xl m-0">حول متجرنا</h3><div class="flex flex-col gap-3"><p class="text-xs lg:text-sm xl:text-base text-gray-300 m-0">📍 نزلة البطران، الجيزة، مصر</p><p class="text-xs lg:text-sm xl:text-base text-gray-300 m-0">✉️ info@matjrna.com</p><p class="text-xs lg:text-sm xl:text-base text-gray-300 m-0">📞 +201005780405</p></div></div>
+            <div class="flex flex-col gap-4"><h3 class="font-bold text-base lg:text-lg xl:text-xl">معلومات</h3><ul class="flex flex-col gap-3 text-xs lg:text-sm xl:text-base"><li><a href="#" class="text-gray-300 hover:text-white">معلومات عنا</a></li><li><a href="#" class="text-gray-300 hover:text-white">قصتنا</a></li><li><a href="#" class="text-gray-300 hover:text-white">اتصل بنا</a></li></ul></div>
+            <div class="flex flex-col gap-4"><h3 class="font-bold text-base lg:text-lg xl:text-xl">سياسة</h3><ul class="flex flex-col gap-3 text-xs lg:text-sm xl:text-base"><li><a href="#" class="text-gray-300 hover:text-white">سياسة الخصوصية</a></li><li><a href="#" class="text-gray-300 hover:text-white">سياسة الاسترجاع</a></li><li><a href="#" class="text-gray-300 hover:text-white">سياسة الشحن</a></li></ul></div>
+            <div class="flex flex-col gap-4"><h3 class="font-bold text-base lg:text-lg xl:text-xl">يدعم</h3><ul class="flex flex-col gap-3 text-xs lg:text-sm xl:text-base"><li><a href="#" class="text-gray-300 hover:text-white">الأسئلة الشائعة</a></li><li><a href="#" class="text-gray-300 hover:text-white">حسابي</a></li><li><a href="#" class="text-gray-300 hover:text-white">تتبع طلبي</a></li></ul></div>
+            <div class="col-span-1 md:col-span-2 lg:col-span-1 flex flex-col gap-4"><img src="shop/files/1050_x_400_v=1719759183&width=450.png" alt="Payment Methods" class="w-32 lg:w-40 xl:w-48 filter brightness-0 invert"><h3 class="font-semibold text-sm lg:text-base xl:text-lg">قم بالتسجيل للحصول على عروض شخصية</h3><form><div class="relative"><input type="email" placeholder="البريد الإلكتروني" class="w-full bg-gray-800 border-gray-700 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 text-xs lg:text-sm xl:text-base"><button type="submit" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">→</button></div></form></div>
+        </div><div class="border-t border-gray-700 flex flex-col md:flex-row justify-between items-center text-xs lg:text-sm xl:text-base text-gray-400 pt-6">
             <p>© 2025, Matjrna.</p>
-            <div class="flex space-x-4 mt-4 md:mt-0">
+            <div class="flex gap-6">
                 <a href="#" aria-label="Facebook" class="text-gray-400 hover:text-white"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M10.183 21.85v-8.868H7.2V9.526h2.983V6.982a4.17 4.17 0 0 1 4.44-4.572 22.33 22.33 0 0 1 2.667.144v3.084h-1.83a1.44 1.44 0 0 0-1.713 1.68v2.208h3.423l-.447 3.456h-2.97v8.868h-3.57Z"></path></svg></a>
                 <a href="#" aria-label="Instagram" class="text-gray-400 hover:text-white"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.4c-2.607 0-2.934.011-3.958.058-1.022.046-1.72.209-2.33.446a4.705 4.705 0 0 0-1.7 1.107 4.706 4.706 0 0 0-1.108 1.7c-.237.611-.4 1.31-.446 2.331C2.41 9.066 2.4 9.392 2.4 12s.011 2.934.058 3.958c.046 1.022.209 1.72.446 2.33a4.706 4.706 0 0 0 1.107 1.7c.534.535 1.07.863 1.7 1.108.611.237 1.309.4 2.33.446 1.025.047 1.352.058 3.959.058s2.934-.011 3.958-.058c1.022-.046 1.72-.209 2.33-.446a4.706 4.706 0 0 0 1.7-1.107 4.706 4.706 0 0 0 1.108-1.7c-.237-.611.4-1.31-.446-2.33.047-1.025.058-1.352.058-3.959s-.011-2.934-.058-3.958c-.047-1.022-.209-1.72-.446-2.33a4.706 4.706 0 0 0-1.107-1.7 4.705 4.705 0 0 0-1.7-1.108c-.611-.237-1.31-.4-2.331-.446C14.934 2.41 14.608 2.4 12 2.4Zm0 8.87a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4Zm6.276-5.124a1.152 1.152 0 1 1-2.304 0 1.152 1.152 0 0 1 2.304 0Z"></path></svg></a>
                 <a href="#" aria-label="TikTok" class="text-gray-400 hover:text-white"><svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M20.027 10.168a5.125 5.125 0 0 1-4.76-2.294v7.893a5.833 5.833 0 1 1-5.834-5.834c.122 0 .241.011.361.019v2.874c-.12-.014-.237-.036-.36-.036a2.977 2.977 0 0 0 0 5.954c1.644 0 3.096-1.295 3.096-2.94L12.56 2.4h2.75a5.122 5.122 0 0 0 4.72 4.573v3.195"></path></svg></a>
